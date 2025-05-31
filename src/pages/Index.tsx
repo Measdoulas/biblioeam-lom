@@ -1,5 +1,5 @@
 
-import { Search, BookOpen, Video, FileText, Link, Users, Award, Library } from "lucide-react";
+import { Search, BookOpen, Video, FileText, Link, Users, Award, Library, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -65,29 +65,36 @@ const Index = () => {
     }
   ];
 
+  const stats = [
+    { value: "856", label: "Ressources", icon: Library },
+    { value: "4", label: "Départements", icon: Briefcase },
+    { value: "2,140", label: "Étudiants", icon: Users },
+    { value: "85", label: "Enseignants", icon: Award }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50">
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-emerald-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4">
               <div className="p-2 bg-emerald-600 rounded-lg">
                 <Library className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-emerald-800">BiblioEAM</h1>
+                <h1 className="text-xl font-bold text-emerald-700">BiblioEAM</h1>
                 <p className="text-xs text-emerald-600">École des Assistants Médicaux - Lomé</p>
               </div>
             </div>
             <nav className="hidden md:flex space-x-6">
-              <Button variant="ghost" className="text-emerald-700 hover:text-emerald-800">
+              <Button variant="ghost" className="text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 rounded-md">
                 Accueil
               </Button>
-              <Button variant="ghost" className="text-emerald-700 hover:text-emerald-800">
+              <Button variant="ghost" className="text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 rounded-md">
                 Ressources
               </Button>
-              <Button variant="ghost" className="text-emerald-700 hover:text-emerald-800">
+              <Button variant="ghost" className="text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 rounded-md">
                 À Propos
               </Button>
             </nav>
@@ -107,14 +114,14 @@ const Index = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
-            <Badge className="bg-emerald-100 text-emerald-800 border-emerald-200 mb-4">
+            <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 mb-4">
               Université de Lomé - EAM
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 animate-fade-in">
               Bibliothèque Numérique
               <span className="text-emerald-600 block">BiblioEAM</span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
               Votre portail d'accès aux ressources académiques et professionnelles 
               pour tous les départements de l'École des Assistants Médicaux de Lomé.
             </p>
@@ -127,10 +134,11 @@ const Index = () => {
               <Input 
                 type="text" 
                 placeholder="Rechercher des mémoires, cours, vidéos, protocoles..."
-                className="pl-12 pr-4 py-4 text-lg border-2 border-emerald-200 focus:border-emerald-500 rounded-xl"
+                className="pl-12 pr-4 py-3 text-lg border-2 border-emerald-200 focus:border-emerald-500 rounded-lg"
               />
-              <Button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-emerald-600 hover:bg-emerald-700 rounded-lg">
-                Rechercher
+              <Button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-emerald-600 hover:bg-emerald-700 rounded-lg px-3">
+                <Search className="h-5 w-5 sm:mr-2" />
+                <span className="hidden sm:inline">Rechercher</span>
               </Button>
             </div>
             <p className="text-sm text-gray-500 mt-2">
@@ -140,22 +148,13 @@ const Index = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-600">856</div>
-              <div className="text-gray-600">Ressources</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-600">4</div>
-              <div className="text-gray-600">Départements</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-600">2,140</div>
-              <div className="text-gray-600">Étudiants</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-600">85</div>
-              <div className="text-gray-600">Enseignants</div>
-            </div>
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <stat.icon className="h-8 w-8 text-emerald-500 mx-auto mb-2" />
+                <div className="text-3xl font-bold text-emerald-700 mb-1">{stat.value}</div>
+                <div className="text-gray-600">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -173,7 +172,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {resourceTypes.map((type, index) => (
               <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer border-l-4 border-l-emerald-500">
-                <CardHeader className="pb-3">
+                <CardHeader className="pb-4">
                   <div className="flex items-center justify-between">
                     <div className={`p-3 rounded-lg ${type.color} bg-opacity-10`}>
                       <type.icon className={`h-6 w-6 ${type.color.replace('bg-', 'text-')}`} />
@@ -193,7 +192,7 @@ const Index = () => {
       </section>
 
       {/* Departments */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-emerald-50 to-green-50">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-emerald-50 to-emerald-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Départements EAM</h2>
@@ -210,11 +209,11 @@ const Index = () => {
                     <div className="flex items-center space-x-3">
                       <div className="text-3xl">{dept.icon}</div>
                       <div>
-                        <CardTitle className="text-lg text-gray-900 mb-1">{dept.name}</CardTitle>
+                        <CardTitle className="text-lg text-gray-900 mb-2">{dept.name}</CardTitle>
                         <CardDescription className="text-gray-600">{dept.description}</CardDescription>
                       </div>
                     </div>
-                    <Badge className="bg-emerald-100 text-emerald-800 border-emerald-200">
+                    <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">
                       {dept.resources} ressources
                     </Badge>
                   </div>
@@ -240,7 +239,7 @@ const Index = () => {
               <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between mb-2">
-                    <Badge variant="outline" className="border-emerald-300 text-emerald-700">
+                    <Badge variant="outline" className="border-emerald-200 text-emerald-700">
                       {resource.type}
                     </Badge>
                     <span className="text-sm text-gray-500">{resource.date}</span>
@@ -266,15 +265,15 @@ const Index = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Rejoignez la Communauté BiblioEAM
           </h2>
-          <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto leading-relaxed">
             Accédez dès maintenant à plus de 856 ressources académiques exclusives 
             et rejoignez 2,140 étudiants dans leur parcours d'excellence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white text-emerald-800 hover:bg-gray-100 font-semibold px-8">
+            <Button size="lg" className="bg-white text-emerald-700 hover:bg-gray-100 font-semibold px-8">
               Créer mon compte étudiant
             </Button>
-            <Button size="lg" variant="outline" className="border-emerald-200 text-white hover:bg-emerald-700 px-8">
+            <Button size="lg" variant="outline" className="border-emerald-200 text-white hover:bg-emerald-700 font-semibold px-8">
               En savoir plus
             </Button>
           </div>
@@ -286,7 +285,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
+              <div className="flex items-center space-x-4 mb-4">
                 <div className="p-2 bg-emerald-600 rounded-lg">
                   <Library className="h-5 w-5 text-white" />
                 </div>
@@ -303,7 +302,7 @@ const Index = () => {
             
             <div>
               <h4 className="font-semibold mb-4">Liens Rapides</h4>
-              <ul className="space-y-2 text-gray-400">
+              <ul className="space-y-2 text-gray-400 list-none">
                 <li><a href="#" className="hover:text-white transition-colors">Ressources</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Départements</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Mon Cursus</a></li>
@@ -313,7 +312,7 @@ const Index = () => {
             
             <div>
               <h4 className="font-semibold mb-4">Contact</h4>
-              <ul className="space-y-2 text-gray-400">
+              <ul className="space-y-2 text-gray-400 list-none">
                 <li>Université de Lomé</li>
                 <li>École des Assistants Médicaux</li>
                 <li>Lomé, Togo</li>
